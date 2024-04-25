@@ -18,17 +18,16 @@ jobs:
       #    release_name: "Release <RELEASE_VERSION>"
 
       # .envrc发布
-      - name: Checkout
-        uses: actions/checkout@main
-
-
       - name: Install babashka
         run: curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install && chmod +x install && ./install
 
       - name: Install direnv
         run: sudo apt install -y direnv
 
+      - name: Checkout
+        uses: actions/checkout@main
+
       - name: Run tests
-        run: make test && make dryrun
+        run: sed -i "s@GH_TOKEN@${GITHUB_TOKEN}@g" .envrc && make test && make dryrun
 
 
