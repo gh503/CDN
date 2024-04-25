@@ -10,8 +10,25 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       RELEASE_VERSION: 1.0.0
     steps:
-      - uses: rymndhng/release-on-push-action@master
-        with:
-          bump_version_scheme: minor
-          tag_prefix: v
-          release_name: "Release <RELEASE_VERSION>"
+      ## 自动发布
+      #- uses: rymndhng/release-on-push-action@master
+      #  with:
+      #    bump_version_scheme: minor
+      #    tag_prefix: v
+      #    release_name: "Release <RELEASE_VERSION>"
+
+      # .envrc发布
+      - name: Checkout
+        uses: actions/checkout@main
+
+
+      - name: Install babashka
+        run: curl -sLO https://raw.githubusercontent.com/babashka/babashka/master/install && chmod +x install && ./install
+
+      - name: Install direnv
+        run: sudo apt install -y direnv
+
+      - name: Run tests
+        run: make test && make dryrun
+
+
