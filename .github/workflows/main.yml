@@ -11,6 +11,5 @@ jobs:
     steps:
       - uses: rymndhng/release-on-push-action@master
         with:
-          bump_version_scheme: minor
           tag_prefix: v
-          release_name: "Release 1.0.0"
+          release_name: "Release 1.0"
