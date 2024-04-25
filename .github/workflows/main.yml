@@ -8,9 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      RELEASE_VERSION: 1.0.0
     steps:
       - uses: rymndhng/release-on-push-action@master
         with:
           bump_version_scheme: minor
           tag_prefix: v
-          release_name: "Release 1.0.0"
+          release_name: "Release <RELEASE_VERSION>"
