@@ -11,6 +11,5 @@ jobs:
     steps:
       - uses: rymndhng/release-on-push-action@master
         with:
-          bump_version_scheme: minor
           tag_prefix: v
-          release_name: "Release v${{ github.event.release.tag_name }}"
+          release_name: "Release ${{ github.event.release.tag_name }}"
