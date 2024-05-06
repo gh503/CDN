@@ -8,14 +8,11 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      VERSION_ID: 1.0.0
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - uses: actions/create-release@v1
+      - uses: tcatm/actions-next-version@v1.5.0
         with:
-          tag_name: ${{ env.VERSION_ID }}
-          release_name: Release ${{ env.VERSION_ID }}
           draft: false
           prerelease: false
