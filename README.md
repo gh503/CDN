@@ -1,7 +1,12 @@
 # CDN
-jsDelivr CDN
+实际上是资源仓库,当前用的是`jsDelivr CDN`。
 
 ## 更新
+
+```bash
+git tag <vx.y.z>
+git push --tags
+```
 
 推送`tag`时触发`release action`。
 
