@@ -2,8 +2,8 @@ name: Releases
 
 on:
   push:
-    tags:
-      - "*"
+    branches:
+      - master
 
 jobs:
   build:
@@ -11,7 +11,28 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: ncipollo/release-action@v1
+      - name: Check out the repository
+        uses: actions/checkout@v4
+
+      - name: Get current date and time
+        id: get_datetime
+        run: echo "::set-output name=DATETIME::$(date -u +'%Y%m%d%H%M%S')"
+
+      - name: Create a new tag
+        id: create_tag
+        run: |
+          TAG_NAME="release-${{ steps.get_datetime.outputs.DATETIME }}"
+          echo "::set-output name=TAG_NAME::$TAG_NAME"
+          git tag $TAG_NAME
+          git push --tags
+
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.REPOS_WORKFLOW_TOKEN }}
+          tag: ${{ steps.create_tag.outputs.TAG_NAME }}
+          name: Release ${{ steps.create_tag.outputs.TAG_NAME }}
+          body: |
+            Automatic release created on ${{ steps.get_datetime.outputs.DATETIME }}
+          draft: false
+          prerelease: false
